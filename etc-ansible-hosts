@@ -18,10 +18,8 @@ ansible_sudo_pass=Blue7070
 [mysql]
 192.168.2.20  # mysql1
 
-
 [wordpress]   # wordpress1
 192.168.2.21  
-
 
 [me2we:children]  
 mysql
