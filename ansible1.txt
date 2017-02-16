@@ -1,0 +1,198 @@
+
+
+
+#########################################
+What would I have done differently ?
+#########################################
+
+I did not having a credit card to create an Azure Trial account. 
+
+I have not yet used Azure.
+Learning a new framework like Azure AWS or Softlayer is easier once you know one. 
+When you know one cloud provider you can apply that knowledge to another cloud provider.
+
+I am new to Azure though, so I do not know how Linux VMs work in Azure or how 
+its authentication works. I did not create a public/private SSH key file.
+
+I can see that Azure is a core cloud skill I will add to my extensive AWS skill.
+
+I have downloaded a number of Microsoft Ebooks and EPUBs on Azure.
+I would like to work with ME2WE, but I am proceeding with Azure no matter what.
+
+
+
+########################################################################
+I would like an Azure Trial Account so I can create some Ubuntu servers
+and run these Ansible playbooks on them.
+########################################################################
+
+Everything in this file explains how I would use Ansible.
+
+This file is a bit convoluted because it describes how I would use Ansible
+to do the Wordpress and MySQL tasks, the configuration file, and the playbooks 
+and example commands.
+
+The good part is that these steps can instantly can be scaled to 10, 100 
+or 1000+ servers.
+
+
+########################################################################
+The logical approach was to modify some of my home Ansible playbooks 
+and commands. I have not used Azure yet, so I was not sure how the 
+playbooks would run on Azure.
+########################################################################
+
+Ansible Playbooks is a script and text file that contains 
+one or more Ansible commands. Use a playbook when you need 
+to run more than one ansible command.
+
+This command applies to as many hosts as you specify in the playbook
+hosts: me2we << means apply to all me2we hosts in /etc/ansible/hosts
+
+"ansible-command" to run playbooks
+-----------------------------------------------------------
+
+
+
+
+############################################################################
+/etc/ansible/hosts
+
+Once ansible is installed, replace the default /etc/ansible/hosts with this
+I did not know what the public or private ips of the VMs would be.
+
+A user account with sudo access will need to be created and enabled
+with password=Blue7070, because root is not allowed ssh access by default
+on Ubuntu (it can be forced if needed)
+############################################################################
+
+[vars]
+ansible_ssh_user=ansible
+ansible_ssh_pass=Blue7070
+ansible_sudo_pass=Blue7070
+
+
+[mysql]
+192.168.2.20  # mysql1
+
+
+[wordpress]   # wordpress1
+192.168.2.21  
+
+
+[me2we:children]  
+mysql
+wordpress
+
+
+
+
+###################################################################
+# This playbook first installs mysql-server and then Wordpress. 
+# I am pretty sure that installing only Worpdress is required because
+# MySQL is a Wordpress dependency and Ansible will install mysql-server
+# if it was not yet installed. Nevertheless, I did install mysql-server
+# first.
+###################################################################
+
+ansible-playbook /root/task1.pb -u root -k
+
+
+
+##############################################################
+/root/task1.pb
+
+This playbook will first install the latest mysql-server and 
+wordpress on every host in the "me2we" group
+
+As you can see above this means every host in [mysql] and every 
+host in [wordpress]
+
+[mysql]     has only 1 host listed 192.168.2.20 
+[wordpress] has only 1 host listed 192.168.2.21
+
+
+# Ansible command to run this playbook
+ansible-playbook /root/task1.pb -u root -k
+
+##############################################################
+
+- hosts: me2we
+  tasks:
+   - name: install mysql-server
+     apt: name=mysql-server update_cache=yes state=latest
+
+   - name: install wordpress
+     apt: name=wordpress update_cache=yes state=latest
+
+
+
+
+
+Ansible Ad-hoc is a single Ansible command you run from the shell
+This command applies to as many hosts as you specify. 
+In this case all hosts in the "me2we" group in /etc/ansible/hosts
+
+Most Ansible tasks do not require a playbook.
+
+"ansible" to run a single ansible command from the command line
+-----------------------------------------------------------------
+
+# show current date on every server in "me2we" ansible group
+ansible me2we -k -m command -a "date"     
+
+
+# show uname on every server
+ansible me2we -k -m command -a "uname -a"
+
+
+# show df diskfree stats on every server
+ansible me2we -k -m command -a "df -a"
+
+# show diskused stats for /home/ on every server
+ansible me2we -k -m command -a "du -sh /home/"
+
+# show free memory stats on every server
+ansible me2we -k -m command -a "free -m"
+
+# show vmstat on every server
+ansible me2we -k -m command -a "vmstat 1 10"
+
+# show w stat on every server
+ansible me2we -k -m command -a "w"
+
+# show /etc/issue banner on every server
+ansible me2we -k -m command -a "cat /etc/issue"
+
+# show the installed python version on every server 
+ansible me2we -k -m command -a "python --version"
+
+
+
+##############################################################
+Upgrades entire server to the latest packages (not latest os)
+##############################################################
+ansible-playbook /root/apt-get-updates.pb -u root -k
+
+
+##################################################################
+Installs a core setup of packages every Ubuntu server should have
+##################################################################
+ansible-playbook /root/core.pb -u root -k
+
+
+#################################################
+Reboot all servers listed in this playbook
+#################################################
+ansible-playbook /root/reboot-esxi-vm.pb -u root -k
+
+
+
+######################################################
+Permissions in /home to 775 owner=teddy group=teddy
+######################################################
+ansible-playbook /root/permissions.pb -u root -k
+
+
+
+
