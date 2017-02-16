@@ -1,0 +1,28 @@
+############################################################################
+/etc/ansible/hosts
+
+Once ansible is installed, replace the default /etc/ansible/hosts with this
+I did not know what the public or private ips of the VMs would be.
+
+A user account with sudo access will need to be created and enabled
+with password=Blue7070, because root is not allowed ssh access by default
+on Ubuntu (it can be forced if needed)
+############################################################################
+
+[vars]
+ansible_ssh_user=ansible
+ansible_ssh_pass=Blue7070
+ansible_sudo_pass=Blue7070
+
+
+[mysql]
+192.168.2.20  # mysql1
+
+
+[wordpress]   # wordpress1
+192.168.2.21  
+
+
+[me2we:children]  
+mysql
+wordpress
