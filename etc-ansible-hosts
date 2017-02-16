@@ -14,13 +14,10 @@ ansible_ssh_user=ansible
 ansible_ssh_pass=Blue7070
 ansible_sudo_pass=Blue7070
 
+# wordpress hosts will have Wordpress and local mysql-server installed
 
-[mysql]
-192.168.2.20  # mysql1
+[wordpress]
+10.10.10.10
+10.10.10.11
 
-[wordpress]   # wordpress1
-192.168.2.21  
 
-[me2we:children]  
-mysql
-wordpress
