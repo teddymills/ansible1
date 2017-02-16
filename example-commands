@@ -9,34 +9,33 @@
 # "ansible" to run a single ansible command from the command line
 -----------------------------------------------------------------
 
-# show current date on every server in "me2we" ansible group
-ansible me2we -k -m command -a "date"     
+# show current date on every server in /etc/ansible/hosts
+ansible all -k -m command -a "date"     
+
+# show uname on every server in /etc/ansible/hosts
+ansible all -k -m command -a "uname -a"
 
 
-# show uname on every server in "me2we" ansible group
-ansible me2we -k -m command -a "uname -a"
+# show df diskfree stats on every server in /etc/ansible/hosts
+ansible all -k -m command -a "df -a"
 
+# show diskused stats for /home/ on every server in /etc/ansible/hosts
+ansible all -k -m command -a "du -sh /home/"
 
-# show df diskfree stats on every server in "me2we" ansible group
-ansible me2we -k -m command -a "df -a"
+# show free memory stats on every server in /etc/ansible/hosts
+ansible all -k -m command -a "free -m"
 
-# show diskused stats for /home/ on every server in "me2we" ansible group
-ansible me2we -k -m command -a "du -sh /home/"
+# show vmstat on every server in /etc/ansible/hosts
+ansible all -k -m command -a "vmstat 1 10"
 
-# show free memory stats on every server in "me2we" ansible group
-ansible me2we -k -m command -a "free -m"
+# show w stat on every server in /etc/ansible/hosts
+ansible all -k -m command -a "w"
 
-# show vmstat on every server in "me2we" ansible group
-ansible me2we -k -m command -a "vmstat 1 10"
+# show /etc/issue banner on every server in /etc/ansible/hosts
+ansible all -k -m command -a "cat /etc/issue"
 
-# show w stat on every server in "me2we" ansible group
-ansible me2we -k -m command -a "w"
-
-# show /etc/issue banner on every server in "me2we" ansible group
-ansible me2we -k -m command -a "cat /etc/issue"
-
-# show the installed python version on every server in "me2we" ansible group 
-ansible me2we -k -m command -a "python --version"
+# show the installed python version on every server in /etc/ansible/hosts
+ansible all -k -m command -a "python --version"
 
 
 
