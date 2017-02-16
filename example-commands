@@ -1,0 +1,64 @@
+These commands are examples only and not required for task.
+
+Ansible Ad-hoc is a single Ansible command you run from the shell
+This command applies to as many hosts as you specify. 
+In this case all hosts in the "me2we" group in /etc/ansible/hosts
+
+Most Ansible tasks do not require a playbook.
+
+"ansible" to run a single ansible command from the command line
+-----------------------------------------------------------------
+
+# show current date on every server in "me2we" ansible group
+ansible me2we -k -m command -a "date"     
+
+
+# show uname on every server in "me2we" ansible group
+ansible me2we -k -m command -a "uname -a"
+
+
+# show df diskfree stats on every server in "me2we" ansible group
+ansible me2we -k -m command -a "df -a"
+
+# show diskused stats for /home/ on every server in "me2we" ansible group
+ansible me2we -k -m command -a "du -sh /home/"
+
+# show free memory stats on every server in "me2we" ansible group
+ansible me2we -k -m command -a "free -m"
+
+# show vmstat on every server in "me2we" ansible group
+ansible me2we -k -m command -a "vmstat 1 10"
+
+# show w stat on every server in "me2we" ansible group
+ansible me2we -k -m command -a "w"
+
+# show /etc/issue banner on every server in "me2we" ansible group
+ansible me2we -k -m command -a "cat /etc/issue"
+
+# show the installed python version on every server in "me2we" ansible group 
+ansible me2we -k -m command -a "python --version"
+
+
+
+##############################################################
+Upgrades entire server to the latest packages (not latest os)
+##############################################################
+ansible-playbook /root/apt-get-updates.pb -u root -k
+
+
+##################################################################
+Installs a core setup of packages every Ubuntu server should have
+##################################################################
+ansible-playbook /root/core.pb -u root -k
+
+
+#################################################
+Reboot all servers listed in this playbook
+#################################################
+ansible-playbook /root/reboot-esxi-vm.pb -u root -k
+
+
+######################################################
+Permissions in /home to 775 owner=teddy group=teddy
+######################################################
+ansible-playbook /root/permissions.pb -u root -k
