@@ -1,12 +1,12 @@
 ############################################################################
-/etc/ansible/hosts
+# /etc/ansible/hosts
 
-Once ansible is installed, replace the default /etc/ansible/hosts with this
-I did not know what the public or private ips of the VMs would be.
+# Once ansible is installed, replace the default /etc/ansible/hosts with this
+# I did not know what the public or private ips of the VMs would be.
 
-A user account with sudo access will need to be created and enabled
-with password=Blue7070, because root is not allowed ssh access by default
-on Ubuntu (it can be forced if needed)
+# A user account with sudo access will need to be created and enabled
+# with password=Blue7070, because root is not allowed ssh access by default
+# on Ubuntu (it can be forced if needed)
 ############################################################################
 
 [vars]
