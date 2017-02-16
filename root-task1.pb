@@ -14,9 +14,18 @@ ansible-playbook /root/task1.pb -u root -k
 ##############################################################
 
 - hosts: me2we
-  tasks:
-   - name: install mysql-server
-     apt: name=mysql-server update_cache=yes state=latest
-
-   - name: install wordpress
-     apt: name=wordpress update_cache=yes state=latest
+  tasks: 
+  - name: Install required software
+    apt: name={{ item }} state=present
+    sudo: yes
+     
+     with_items: 
+     - mysql-server
+     - apache2
+     - php5-mysql
+     - php5
+     - libapache2-mod-php5
+     - php5-mcrypt
+     - python-mysqldb
+     
+     
