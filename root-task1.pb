@@ -15,7 +15,7 @@
 
 - hosts: me2we
   tasks: 
-  - name: Install required software
+  - name: Install Wordpress dependencies
     apt: name={{ item }} state=present
     sudo: yes
      
