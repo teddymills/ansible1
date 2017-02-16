@@ -22,10 +22,11 @@
      with_items: 
      - mysql-server
      - apache2
-     - php5-mysql
      - php5
+     - php5-mysql
      - libapache2-mod-php5
      - php5-mcrypt
      - python-mysqldb
-     
+     - php5-gd 
+     - libssh2-php
      
