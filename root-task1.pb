@@ -13,7 +13,7 @@
 # ansible-playbook /root/task1.pb -u root -k
 ##############################################################
 
-- hosts: me2we
+- hosts: wordpress
   tasks: 
   - name: First install all Wordpress dependencies 
     apt: name={{ item }} state=present
