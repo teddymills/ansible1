@@ -7,6 +7,11 @@
 # A user account with sudo access will need to be created and enabled
 # with password=Blue7070, because root is not allowed ssh access by default
 # on Ubuntu (it can be forced if needed)
+
+# Only a single group, in this case wordpress is required because every
+# host in wordpress group will get mysql-server installed on it because
+# mysql-server is required by wordpress. A single database could be used by
+# all wordpress sites...but that was not required here.
 ############################################################################
 
 [vars]
